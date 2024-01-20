@@ -23,7 +23,7 @@ class TodosList extends StatelessWidget {
         itemBuilder: (context, index) {
           final task = todos[index];
           return TaskListTile(
-            task: task,
+            todo: task,
           );
         },
       ),

@@ -1,4 +1,6 @@
+import 'package:bloc_todo_tutorial/bloc/todos_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '/models/todo.dart';
 import '/screens/add_todo_screen.dart';
@@ -6,10 +8,10 @@ import '/screens/add_todo_screen.dart';
 class TaskListTile extends StatelessWidget {
   const TaskListTile({
     super.key,
-    required this.task,
+    required this.todo,
   });
 
-  final Todo task;
+  final Todo todo;
 
   @override
   Widget build(BuildContext context) {
@@ -19,18 +21,27 @@ class TaskListTile extends StatelessWidget {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (_) => AddTodoScreen(
-                todo: task,
+                todo: todo,
               ),
             ),
           );
         },
         leading: Checkbox(
-          value: task.isCompleted,
-          onChanged: (value) {},
+          value: todo.isCompleted,
+          onChanged: (value) {
+            context.read<TodosBloc>().add(
+                  MarkTodoAsCompleted(
+                    id: todo.id,
+                    isCompleted: value ?? false,
+                  ),
+                );
+          },
         ),
-        title: Text(task.title),
+        title: Text(todo.title),
         trailing: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            context.read<TodosBloc>().add(DeleteTodoEvent(id: todo.id));
+          },
           icon: const Icon(
             Icons.delete,
             color: Colors.red,

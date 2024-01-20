@@ -1,4 +1,6 @@
+import 'package:bloc_todo_tutorial/bloc/todos_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FilterTodosPopupButton extends StatefulWidget {
   const FilterTodosPopupButton({super.key});
@@ -23,17 +25,23 @@ class _FilterTodosPopupButtonState extends State<FilterTodosPopupButton> {
         PopupMenuItem<String>(
           value: 'Show All',
           child: const Text('Show All'),
-          onTap: () {},
+          onTap: () {
+            context.read<TodosBloc>().add(GetAllTodosEvent());
+          },
         ),
         PopupMenuItem<String>(
           value: 'Show Active',
           child: const Text('Show Active'),
-          onTap: () {},
+          onTap: () {
+            context.read<TodosBloc>().add(GetActiveTodosEvent());
+          },
         ),
         PopupMenuItem<String>(
           value: 'Show Completed',
           child: const Text('Show Completed'),
-          onTap: () {},
+          onTap: () {
+            context.read<TodosBloc>().add(GetCompletedTodosEvent());
+          },
         ),
       ],
     );
